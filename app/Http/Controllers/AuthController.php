@@ -169,6 +169,7 @@ class AuthController extends Controller
 
     public function changePassword(Request $request)
     {
+
         $validate = Validator::make($request->all(), [
             'email' => 'required|email',
             'old_password' => 'required|string',
@@ -205,6 +206,46 @@ class AuthController extends Controller
                 'message' => 'Password changed successfully',
                 'status' => true,
                 'user' => $user->id,
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => 'Error occurred while processing your request, ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function register(Request $request)
+    {
+        // Validate the request
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'confirm_password' => 'required|string|min:8|same:password',
+        ]);
+
+        // Check if validation fails
+        if ($validate->fails()) {
+            return response()->json(['error' => $validate->errors(), 401]);
+        };
+
+        try {
+            DB::beginTransaction();
+
+            // Create a new user
+            $user = UserModel::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
+
+            DB::commit();
+            return response()->json([
+                'message' => 'User registered successfully',
+                'status' => true,
+                'user' => $user,
             ], 200);
         } catch (\Exception $e) {
             DB::rollBack();

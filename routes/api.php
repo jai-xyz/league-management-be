@@ -24,7 +24,7 @@ Route::get('ping', function () {
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('forgotPassword', [AuthController::class, 'forgotPassword']);
 Route::prefix('Auth')->middleware('auth:api')->group(function () {
-    // Route::post('validateAccess', [AuthController::class, 'validateAccess']);
+    Route::post('register', [AuthController::class, 'register']);
     Route::post('changePassword', [AuthController::class, 'changePassword']);
     // Route::post('resetPassword', [AuthController::class, 'resetPassword']);
     Route::post('logout', [AuthController::class, 'logout']);
