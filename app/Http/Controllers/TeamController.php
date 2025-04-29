@@ -38,6 +38,7 @@ class TeamController extends Controller
 
         // Get the team by ID
         $team = TeamModel::findOrFail($request->id);
+
         if (!$team) {
             return response()->json(['message' => 'Team not found'], 404);
         }
