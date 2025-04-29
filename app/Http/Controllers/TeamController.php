@@ -10,23 +10,19 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getTeamList()
     {
-        //
+        // Get all teams
+        $teams = TeamModel::all();
+
+        // Return the teams as a JSON response
+        return response()->json($teams, 200);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function createUpdateTeam()
     {
         //
     }
@@ -34,31 +30,26 @@ class TeamController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TeamModel $teamModel)
+    public function viewTeam(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
+
+        // Get the team by ID
+        $team = TeamModel::findOrFail($request->id);
+        if (!$team) {
+            return response()->json(['message' => 'Team not found'], 404);
+        }
+
+        // Return the team as a JSON response
+        return response()->json($team, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TeamModel $teamModel)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, TeamModel $teamModel)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(TeamModel $teamModel)
+    public function deleteTeam(TeamModel $teamModel)
     {
         //
     }
