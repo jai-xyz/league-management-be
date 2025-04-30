@@ -22,10 +22,14 @@ class AuthController extends Controller
     {
 
         // Validate the request
-        $request->validate([
+        $validate = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
+
+        if ($validate->fails()) {
+            return response()->json(['error' => $validate->errors(), 401]);
+        }
 
         try {
             DB::beginTransaction();
