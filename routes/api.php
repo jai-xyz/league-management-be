@@ -16,6 +16,11 @@ use App\Http\Controllers\TeamController;
 |
 */
 
+// check if the user is authenticated
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 // TEST POSTMAN & BACKEND API
 Route::get('ping', function () {
     return response()->json(['message' => 'API is working!']);

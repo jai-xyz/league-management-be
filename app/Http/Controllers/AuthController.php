@@ -54,6 +54,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'user' => $user,
             ], 200);
+            
         } catch (JWTException $e) {
             DB::rollBack();
             // Return an error response if token creation fails
