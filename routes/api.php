@@ -16,20 +16,24 @@ use App\Http\Controllers\TeamController;
 |
 */
 
-// check if the user is authenticated
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 // TEST POSTMAN & BACKEND API
 Route::get('ping', function () {
     return response()->json(['message' => 'API is working!']);
 });
 
+// check if the user is authenticated
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 // OPEN ROUTES
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('register', [AuthController::class, 'register']);
 Route::post('forgotPassword', [AuthController::class, 'forgotPassword']);
+
+// AUTHENTICATED ROUTES
 Route::prefix('Auth')->middleware('auth:api')->group(function () {
     Route::post('changePassword', [AuthController::class, 'changePassword']);
     // Route::post('resetPassword', [AuthController::class, 'resetPassword']);
@@ -37,9 +41,4 @@ Route::prefix('Auth')->middleware('auth:api')->group(function () {
 });
 
 // TEAMS ROUTES 
-Route::prefix('Team')->middleware('auth:api')->group(function () {
-    Route::get('getTeamList', [TeamController::class, 'getTeamList']);
-    Route::get('viewTeam', [TeamController::class, 'viewTeam']);
-    Route::post('createUpdateTeam', [TeamController::class, 'createUpdateTeam']);
-    Route::post('deleteTeam', [TeamController::class, 'deleteTeam']);
-});
+Route::middleware('auth:api')->apiResource('/teams', TeamController::class);
