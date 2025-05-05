@@ -71,7 +71,7 @@ class TeamController extends Controller
     public function update(Request $request, string $id)
     {
         $validate = Validator::make($request->all(), [
-            'id' => 'required|integer|exists:teams,id',
+            // 'team_id' => 'required|integer|exists:teams,id',
             'name' => 'required|string|max:255',
             'alias' => 'required|string|max:255',
         ]);
