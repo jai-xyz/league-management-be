@@ -18,6 +18,6 @@ class TeamModel extends Model
 
     public function players()
     {
-        return $this->hasMany(PlayerModel::class, 'id', 'id');
+        return $this->hasMany(PlayerModel::class, 'team_id', 'team_id');
     }
 }

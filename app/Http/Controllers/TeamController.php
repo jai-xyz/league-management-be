@@ -71,7 +71,6 @@ class TeamController extends Controller
     public function update(Request $request, string $id)
     {
         $validate = Validator::make($request->all(), [
-            // 'team_id' => 'required|integer|exists:teams,id',
             'name' => 'required|string|max:255',
             'alias' => 'required|string|max:255',
         ]);
@@ -82,6 +81,9 @@ class TeamController extends Controller
 
         try {
             $team = TeamModel::findOrFail($id);
+            if (!$team) {
+                return response()->json(['message' => 'Team not found'], 404);
+            }
             $team->update($request->only(['name', 'alias']));
             return response()->json(['message' => 'Team updated successfully', 'team' => $team], 200);
         } catch (\Exception $e) {
