@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
 
@@ -46,3 +47,6 @@ Route::middleware('auth:api')->apiResource('/teams', TeamController::class);
 
 // PLAYER ROUTES 
 Route::middleware('auth:api')->apiResource('/players', PlayerController::class);
+
+// GAME ROUTES 
+Route::middleware('auth:api')->apiResource('/games', GameController::class);

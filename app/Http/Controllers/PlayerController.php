@@ -14,7 +14,7 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        // "team" here is Team word on TeamModel
+        // "team" here is team word on TeamModel public function
         $players = PlayerModel::with('team')->get();
 
         return response()->json($players, 200);
