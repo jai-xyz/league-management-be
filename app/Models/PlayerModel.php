@@ -21,7 +21,8 @@ class PlayerModel extends Model
         'height',
         'weight',
         'position',
-        'jersey_number'
+        'jersey_number',
+        'profile_picture',
     ];
 
     public function team()

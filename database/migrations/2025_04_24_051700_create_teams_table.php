@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('team_id');
             $table->string('name');
             $table->string('alias')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

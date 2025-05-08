@@ -23,6 +23,7 @@ return new class extends Migration
             $table->float('weight')->nullable();
             $table->string('position');
             $table->integer('jersey_number');
+            $table->string('profile_picture')->nullable();
             $table->timestamps();
         });
     }

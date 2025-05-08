@@ -24,7 +24,8 @@ class PlayerSeeder extends Seeder
             'height' => 6.1,
             'weight' => 180,
             'position' => 'Forward',
-            'jersey_number' => 10
+            'jersey_number' => 10,
+            'profile_picture' => 'john_doe.jpg',
         ]);
     }
 }

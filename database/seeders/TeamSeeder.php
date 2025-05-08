@@ -17,6 +17,7 @@ class TeamSeeder extends Seeder
             TeamModel::factory()->create([
                 'name' => 'Team Name' . $i,
                 'alias' => 'Team Alias' . $i,
+                'logo' => 'logo' . $i . '.png',
             ]);
         }
     }

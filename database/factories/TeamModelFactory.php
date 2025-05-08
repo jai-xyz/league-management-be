@@ -19,6 +19,7 @@ class TeamModelFactory extends Factory
         return [
             'name' => fake()->name(),
             'alias' => fake()->unique()->word(),
+            'logo' => fake()->imageUrl(640, 480, 'sports', true),
         ];
     }
 }

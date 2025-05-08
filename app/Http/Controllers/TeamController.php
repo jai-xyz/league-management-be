@@ -28,6 +28,7 @@ class TeamController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'alias' => 'required|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validate->fails()) {
@@ -73,6 +74,7 @@ class TeamController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'alias' => 'required|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validate->fails()) {

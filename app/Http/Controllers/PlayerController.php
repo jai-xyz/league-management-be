@@ -36,6 +36,7 @@ class PlayerController extends Controller
             'weight' => 'required|integer|min:0',
             'position' => 'required|string|max:255',
             'jersey_number' => 'required|integer|min:0',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validate->fails()) {
@@ -104,6 +105,7 @@ class PlayerController extends Controller
             'weight' => 'required|integer|min:0',
             'position' => 'required|string|max:255',
             'jersey_number' => 'required|integer|min:0',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validate->fails()) {
