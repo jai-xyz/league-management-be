@@ -43,10 +43,10 @@ Route::prefix('Auth')->middleware('auth:api')->group(function () {
 });
 
 // TEAMS ROUTES 
-Route::middleware('auth:api')->apiResource('/teams', TeamController::class);
+Route::apiResource('/teams', TeamController::class);
 
 // PLAYER ROUTES 
-Route::middleware('auth:api')->apiResource('/players', PlayerController::class);
+Route::apiResource('/players', PlayerController::class);
 
 // GAME ROUTES 
-Route::middleware('auth:api')->apiResource('/games', GameController::class);
+Route::apiResource('/games', GameController::class);

@@ -31,13 +31,24 @@ class TeamController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('logo')->store('logo_images', 'public');
+        } else {
+            $imagePath = null;
+        }
+
         if ($validate->fails()) {
             return response()->json(['error' => $validate->errors()], 401);
         }
 
         try {
             // Create a new team
-            $team = TeamModel::create($request->only(['name', 'alias']));
+            $team = TeamModel::create($request->only(['name', 'alias', 'logo']));
+            if ($imagePath) {
+                $team->logo = $imagePath;
+                $team->save();
+            }
+            
             return response()->json([
                 'message' => 'Team created successfully',
                 'team' => $team,
