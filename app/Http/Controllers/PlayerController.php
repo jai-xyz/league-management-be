@@ -81,7 +81,11 @@ class PlayerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $player = PlayerModel::with('team')->find($id);
+        if (!$player) {
+            return response()->json(['error' => 'Player not found'], 404);
+        }
+        return response()->json($player, 200);
     }
 
     /**
