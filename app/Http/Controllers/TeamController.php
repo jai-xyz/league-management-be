@@ -31,7 +31,7 @@ class TeamController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('logo')) {
             $imagePath = $request->file('logo')->store('logo_images', 'public');
         } else {
             $imagePath = null;
@@ -88,16 +88,31 @@ class TeamController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+
         if ($validate->fails()) {
             return response()->json(['error' => $validate->errors()], 401);
         }
 
+        if ($request->hasFile('logo')) {
+            // Delete the old logo if it exists
+            $team = TeamModel::find($id);
+            if ($team && $team->logo) {
+                \Storage::disk('public')->delete($team->logo);
+            }
+            $imagePath = $request->file('logo')->store('logo_images', 'public');
+        } else {
+            $imagePath = null;
+        }
+
         try {
             $team = TeamModel::findOrFail($id);
-            if (!$team) {
-                return response()->json(['message' => 'Team not found'], 404);
+            $team->update($request->only(['name', 'alias'])); // Exclude 'logo' from the update here
+        
+            if ($imagePath) {
+                $team->logo = $imagePath; // Update the logo only if a new one is provided
+                $team->save();
             }
-            $team->update($request->only(['name', 'alias']));
+        
             return response()->json(['message' => 'Team updated successfully', 'team' => $team], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while updating the team', 'details' => $e->getMessage()], 500);

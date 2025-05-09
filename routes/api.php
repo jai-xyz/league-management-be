@@ -44,6 +44,7 @@ Route::prefix('Auth')->middleware('auth:api')->group(function () {
 
 // TEAMS ROUTES 
 Route::apiResource('/teams', TeamController::class);
+Route::post('teams/edit/{id}', [TeamController::class, 'update']);
 
 // PLAYER ROUTES 
 Route::apiResource('/players', PlayerController::class);
