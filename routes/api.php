@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\DivisionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,9 @@ Route::prefix('Auth')->middleware('auth:api')->group(function () {
     // Route::post('resetPassword', [AuthController::class, 'resetPassword']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
+
+//Division Routes
+Route::apiResource('/divisions',DivisionController::class);
 
 // TEAMS ROUTES 
 Route::apiResource('/teams', TeamController::class);

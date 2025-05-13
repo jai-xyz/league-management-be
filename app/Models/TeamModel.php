@@ -15,6 +15,7 @@ class TeamModel extends Model
         'name',
         'alias',
         'logo',
+        'division_id',
     ];
 
     public function players()
