@@ -44,7 +44,7 @@ Route::prefix('Auth')->middleware('auth:api')->group(function () {
 });
 
 //Division Routes
-Route::apiResource('/divisions',DivisionController::class);
+Route::apiResource('/divisions', DivisionController::class);
 
 // TEAMS ROUTES 
 Route::apiResource('/teams', TeamController::class);

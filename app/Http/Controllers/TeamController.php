@@ -6,6 +6,7 @@ use App\Models\TeamModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class TeamController extends Controller
 {
@@ -48,7 +49,7 @@ class TeamController extends Controller
                 $team->logo = $imagePath;
                 $team->save();
             }
-            
+
             return response()->json([
                 'message' => 'Team created successfully',
                 'team' => $team,
@@ -97,7 +98,7 @@ class TeamController extends Controller
             // Delete the old logo if it exists
             $team = TeamModel::find($id);
             if ($team && $team->logo) {
-                \Storage::disk('public')->delete($team->logo);
+                Storage::disk('public')->delete($team->logo);
             }
             $imagePath = $request->file('logo')->store('logo_images', 'public');
         } else {
@@ -107,12 +108,12 @@ class TeamController extends Controller
         try {
             $team = TeamModel::findOrFail($id);
             $team->update($request->only(['name', 'alias'])); // Exclude 'logo' from the update here
-        
+
             if ($imagePath) {
                 $team->logo = $imagePath; // Update the logo only if a new one is provided
                 $team->save();
             }
-        
+
             return response()->json(['message' => 'Team updated successfully', 'team' => $team], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while updating the team', 'details' => $e->getMessage()], 500);

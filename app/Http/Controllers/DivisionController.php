@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Division;
+
+use App\Models\DivisionModel;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
@@ -13,12 +14,10 @@ class DivisionController extends Controller
      */
     public function index()
     {
-        $divisions = Division::all();
+        $divisions = DivisionModel::all();
 
         // Return the divisions as a JSON response
         return response()->json($divisions, 200);
-
-     
     }
 
     /**
@@ -35,7 +34,7 @@ class DivisionController extends Controller
         }
 
         try {
-            $division = Division::create($request->only(['name']));
+            $division = DivisionModel::create($request->only(['name']));
             return response()->json([
                 'message' => 'Division created successfully',
                 'division' => $division,
@@ -46,7 +45,6 @@ class DivisionController extends Controller
                 'name' => $request->name,
             ], 500);
         }
-
     }
 
     /**
@@ -54,7 +52,7 @@ class DivisionController extends Controller
      */
     public function show(string $id)
     {
-        $division = Division::find($id);
+        $division = DivisionModel::find($id);
 
         if (!$division) {
             return response()->json(['error' => 'Division not found'], 404);
@@ -77,7 +75,7 @@ class DivisionController extends Controller
         }
 
         try {
-            $division = Division::find($id);
+            $division = DivisionModel::find($id);
 
             if (!$division) {
                 return response()->json(['error' => 'Division not found'], 404);
@@ -89,27 +87,23 @@ class DivisionController extends Controller
                 'message' => 'Division updated successfully',
                 'division' => $division,
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'An error occurred while creating/updating the division',
                 'name' => $request->name,
             ], 500);
         }
-
-    
-           
-        }
+    }
 
 
-    
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $division = Division::find($id);
+        $division = DivisionModel::find($id);
 
         if (!$division) {
             return response()->json(['error' => 'Division not found'], 404);
@@ -122,5 +116,4 @@ class DivisionController extends Controller
             return response()->json(['error' => 'An error occurred while deleting the division'], 500);
         }
     }
-
 }
