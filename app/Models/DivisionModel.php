@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Models;
+
 use \Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Division extends Model
+class DivisionModel extends Model
 {
     use HasFactory;
     protected $table = 'divisions';
@@ -20,5 +21,4 @@ class Division extends Model
     {
         return $this->hasMany(TeamModel::class, 'division_id', 'division_id');
     }
-    
 }
