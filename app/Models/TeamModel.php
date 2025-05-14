@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class TeamModel extends Model
 {
     use HasFactory;
@@ -24,6 +25,6 @@ class TeamModel extends Model
     }
     public function division()
     {
-        return $this->belongsTo(Division::class, 'division_id', 'division_id');
+        return $this->belongsTo(DivisionModel::class, 'division_id', 'division_id');
     }
 }
