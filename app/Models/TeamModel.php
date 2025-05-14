@@ -14,9 +14,9 @@ class TeamModel extends Model
 
     protected $fillable = [
         'name',
+        'division_id',
         'alias',
         'logo',
-        'division_id',
     ];
 
     public function players()

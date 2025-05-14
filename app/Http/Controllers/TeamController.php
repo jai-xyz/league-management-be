@@ -33,23 +33,28 @@ class TeamController extends Controller
             'division_id' => 'required|exists:divisions,division_id',
         ]);
 
-        if ($request->hasFile('logo')) {
-            $imagePath = $request->file('logo')->store('logo_images', 'public');
-        } else {
-            $imagePath = null;
-        }
-
         if ($validate->fails()) {
             return response()->json(['error' => $validate->errors()], 401);
         }
 
         try {
-            // Create a new team
-            $team = TeamModel::create($request->only(['name', 'alias', 'logo', 'division_id']));
-            if ($imagePath) {
-                $team->logo = $imagePath;
-                $team->save();
+            $imageName = null;
+
+            if ($request->hasFile('logo')) {
+                // Store the file in the logo_images folder
+                $imagePath = $request->file('logo')->store('logo_images', 'public');
+
+                // Extract only the file name
+                $imageName = basename($imagePath);
             }
+
+            // Create a new team
+            $team = TeamModel::create([
+                'name' => $request->name,
+                'alias' => $request->alias,
+                'logo' => $imageName,
+                'division_id' => $request->division_id,
+            ]);
 
             return response()->json([
                 'message' => 'Team created successfully',
@@ -57,14 +62,15 @@ class TeamController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'An error occurred while creating/updating the team',
-                'name' => $request->name,
-                'team' => $request->alias,
+                'error' => 'An error occurred while creating the team',
+                'team name' => $request->name,
+                'division_id' => $request->division_id,
+                'logo' => $request->logo,
+                'alias' => $request->alias,
                 'details' => $e->getMessage(),
             ], 500);
         }
     }
-
     /**
      * Display the specified resource.
      */
