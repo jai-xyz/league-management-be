@@ -45,6 +45,8 @@ Route::prefix('Auth')->middleware('auth:api')->group(function () {
 
 //Division Routes
 Route::apiResource('/divisions',DivisionController::class);
+Route::get('/divisions/{division_id}/teams', [DivisionController::class, 'getTeamsByDivision']);
+
 
 // TEAMS ROUTES 
 Route::apiResource('/teams', TeamController::class);

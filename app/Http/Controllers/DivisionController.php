@@ -123,4 +123,11 @@ class DivisionController extends Controller
         }
     }
 
+
+    public function getTeamsByDivision($divisionId)
+        {
+            $teams = Division::findOrFail($divisionId)->teams;
+            return response()->json($teams);
+        }
+
 }

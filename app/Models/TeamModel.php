@@ -22,4 +22,8 @@ class TeamModel extends Model
     {
         return $this->hasMany(PlayerModel::class, 'team_id', 'team_id');
     }
+    public function division()
+    {
+        return $this->belongsTo(Division::class, 'division_id', 'division_id');
+    }
 }

@@ -29,6 +29,7 @@ class TeamController extends Controller
             'name' => 'required|string|max:255',
             'alias' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'division_id' => 'required|exists:divisions,division_id',
         ]);
 
         if ($request->hasFile('logo')) {
@@ -43,7 +44,7 @@ class TeamController extends Controller
 
         try {
             // Create a new team
-            $team = TeamModel::create($request->only(['name', 'alias', 'logo']));
+            $team = TeamModel::create($request->only(['name', 'alias', 'logo', 'division_id']));
             if ($imagePath) {
                 $team->logo = $imagePath;
                 $team->save();
