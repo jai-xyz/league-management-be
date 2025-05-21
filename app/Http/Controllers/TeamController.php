@@ -34,7 +34,7 @@ class TeamController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()], 401);
+            return response()->json(['error' => $validate->errors()], 422);
         }
 
         try {
@@ -98,7 +98,7 @@ class TeamController extends Controller
 
 
         if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()], 401);
+            return response()->json(['error' => $validate->errors()], 422);
         }
 
         if ($request->hasFile('logo')) {
@@ -108,6 +108,7 @@ class TeamController extends Controller
                 Storage::disk('public')->delete($team->logo);
             }
             $imagePath = $request->file('logo')->store('logo_images', 'public');
+            $imageName = basename($imagePath);
         } else {
             $imagePath = null;
         }
@@ -117,7 +118,7 @@ class TeamController extends Controller
             $team->update($request->only(['name', 'alias'])); // Exclude 'logo' from the update here
 
             if ($imagePath) {
-                $team->logo = $imagePath; // Update the logo only if a new one is provided
+                $team->logo = $imageName; // Update the logo only if a new one is provided
                 $team->save();
             }
 

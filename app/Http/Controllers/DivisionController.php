@@ -30,7 +30,7 @@ class DivisionController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()], 401);
+            return response()->json(['error' => $validate->errors()], 422);
         }
 
         try {
@@ -71,7 +71,7 @@ class DivisionController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return response()->json(['error' => $validate->errors()], 401);
+            return response()->json(['error' => $validate->errors()], 422);
         }
 
         try {
